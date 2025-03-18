@@ -1,3 +1,4 @@
+//ambest function
 document.addEventListener("DOMContentLoaded", () => {
   const file = document.querySelector("#sheet");
   const submitBtn = document.querySelector("#submitBtn");
@@ -82,3 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   submitBtn.addEventListener("click", ambest);
 });
+
+
+//ta petero
+
