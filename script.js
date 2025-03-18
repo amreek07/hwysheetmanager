@@ -54,10 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   
-    downloadCSV(newAmbestSheet);
+    downloadCSV(newAmbestSheet, "Ambest");
   };
 
-  const downloadCSV = (processedData) => {
+  const downloadCSV = (processedData, fileName) => {
+    // console.log()
     const worksheet = XLSX.utils.json_to_sheet(processedData); // Convert JSON data to a worksheet
     const csvContent = XLSX.utils.sheet_to_csv(worksheet); // Convert worksheet to CSV format
     
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mm = newDate.getMonth() + 1;
 
 
-    a.download = `Ambest ${dd}-${mm}-${yyyy}.csv`; // File name
+    a.download = `${fileName} ${dd}-${mm}-${yyyy}.csv`; // File name
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
