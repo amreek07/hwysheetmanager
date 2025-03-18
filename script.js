@@ -53,8 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
       newAmbestSheet.push(CalculatedData);
     });
 
-
-  
     downloadCSV(newAmbestSheet, "Ambest");
   };
 
@@ -67,8 +65,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    const newDate = new Date();
 
+    const newDate = new Date();
     const yyyy = newDate.getFullYear();
     const dd = newDate.getDate();
     const mm = newDate.getMonth() + 1;
