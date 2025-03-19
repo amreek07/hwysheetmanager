@@ -157,6 +157,27 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+
+  //sap bros data process
+
+  const sapBrosData = document.querySelector('#sapText');
+  const sapBrosBtn = document.querySelector('#sapBroProcess');
+
+  sapBrosData.addEventListener('change', ()=>{
+    const sapBroInputText = sapBrosData.value
+     
+    const headers = ["Location", "State", "Cost Plus Price", "Retail Minus Price", "Your Price", "Posted Retail", "Your Savings"];
+  
+
+    console.log(typeof sapBroInputText); 
+    console.log(sapBroInputText); 
+    // sapBroInputText.forEach((value)=>{
+    //   console.log(value);
+    // })
+    // console.log(sapBrosData.value);
+
+  })
+
 //download csv all files
   const downloadCSV = (processedData, fileName) => {
     const worksheet = XLSX.utils.json_to_sheet(processedData); // Convert JSON data to a worksheet
