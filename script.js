@@ -156,7 +156,130 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadCSV(newcaseyData, "Caseys Cost");
   }
 
+  // 7 Fleet sheet function
+  const FleetFile = document.querySelector('#flsheet');
+  let FlJsonData;
+  FleetFile.addEventListener("change", (event) => {
+    // console.log(event.target.files[0]);
+    const uploadedFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheetName = workbook.SheetNames[0]; // Get first sheet
+      const sheet = workbook.Sheets[sheetName];
+      FlJsonData = XLSX.utils.sheet_to_json(sheet, {range: 0}); // Convert sheet to JSON
+      console.log(" fleet testing--------->");
+      console.log(FlJsonData);
+    };
+    reader.readAsArrayBuffer(uploadedFile); // Read the file
+  });
 
+  const fleetCalculation = (e) =>{
+    console.log('testing->');
+    console.log(e);
+      const sheetSaving = Number(e["Savings/Gal"]);
+      const sheetRetail = Number(e["Retail Price"]);
+      const hwyCostSaving = (7 / 10) * sheetSaving;
+      const difference = (sheetRetail - hwyCostSaving).toFixed(3);
+      const discount = (sheetRetail - difference).toFixed(3);
+      console.log("discount--->",discount);
+    //   // const cleanName = e.ts_name.replace(/'/g, ""); //remove ' from the name of travelcenters
+    return {
+      travelcenter: e["Store#"],
+      merchant: e["Comdata"],
+      price: sheetRetail.toFixed(3),
+      difference: difference,
+      state: e.State,
+      discount: discount,
+    };
+  }
+  const fleet = () => {
+    let newfleetData = [];
+    FlJsonData.forEach((data) => {
+      let calculatedData = fleetCalculation(data);
+      // console.log('calculated',calculatedData);
+      newfleetData.push(calculatedData);
+    });
+    downloadCSV(newfleetData, "7 Fleet");
+  }
+
+  //Ractrac sheet function
+
+   // 7 Fleet sheet function
+   const RaceFile = document.querySelector('#rcsheet');
+   let RcJsonData;
+   RaceFile.addEventListener("change", (event) => {
+     // console.log(event.target.files[0]);
+     const uploadedFile = event.target.files[0];
+     const reader = new FileReader();
+     reader.onload = function (e) {
+       const data = new Uint8Array(e.target.result);
+       const workbook = XLSX.read(data, { type: "array" });
+       const sheetName = workbook.SheetNames[0]; // Get first sheet
+       const sheet = workbook.Sheets[sheetName];
+       RcJsonData = XLSX.utils.sheet_to_json(sheet, {range: 4}); // Convert sheet to JSON
+       console.log(" Racrtac testing--------->");
+       console.log(RcJsonData);
+     };
+     reader.readAsArrayBuffer(uploadedFile); // Read the file
+   });
+ 
+   const RaceCalculation = (e) =>{
+    console.log('testing->');
+    console.log(e);
+    let retail_price = Number(e["Retail Price"]);
+    let fuel_price = Number(e["Final Price"]);
+    let saving_price = (retail_price - fuel_price );
+    let hwyCostSaving = (7 / 10) * saving_price;
+    let difference = (retail_price - hwyCostSaving).toFixed(3);
+    let discount = (retail_price - difference).toFixed(3);
+    // console.log("diff--->",difference);
+    // console.log('discount--->',discount);
+     return {
+       travelcenter: e["City"],
+       merchant: e["Store ID"],
+       price: retail_price.toFixed(3),
+       difference: difference,
+       state: e.State,
+       discount: discount,
+     };
+   }
+   const racetrac = () => {
+     let newraceData = [];
+     RcJsonData.forEach((data) => {
+       let calculatedData = RaceCalculation(data);
+      //  console.log('calculated',calculatedData);
+       newraceData.push(calculatedData);
+     });
+     downloadCSV(newraceData, "Racrtac");
+   }
+
+
+
+  //sap bros data function
+  // const sapBrosData = document.querySelector('#sapText');
+  // sapBrosData.addEventListener('change', () => {
+  //     const sapBroInputText = sapBrosData.value.trim();
+  //     // console.log('test------>',sapBroInputText);
+  //     if (!sapBroInputText) {
+  //         console.log("No data entered!");
+  //         return;
+  //     }
+  //     const headers = ["Location", "State", "Cost Plus Price", "Retail Minus Price", "Your Price", "Posted Retail", "Your Savings"];
+  //     const csvToJson = (data) =>{
+  //       data.split("\n").forEach((line)=>{
+  //         const newData = line.trim();
+  //         if (headers.includes(newData)) {
+  //           console.log("not Matching one:", newData);
+  //       }
+  //         // console.log(typeof newData);
+  //         console.log(newData);
+  //       })
+  //     }
+  //     const jsonData = csvToJson(sapBroInputText);
+  //     // console.log(jsonData); // Output JSON in the console
+  // });
 
 
 //download csv all files
@@ -180,9 +303,13 @@ document.addEventListener("DOMContentLoaded", () => {
   //all btn click functionality
   const taSubmitBtn = document.querySelector('#taSubmitBtn');
   const casubmitbtn = document.querySelector('#caSubmitBtn');
+  const flsubmitbtn = document.querySelector('#flSubmitBtn');
+  const rcsubmitbtn = document.querySelector('#rcSubmitBtn');
   submitBtn.addEventListener("click", ambest);
   taSubmitBtn.addEventListener("click", taPetro);
   casubmitbtn.addEventListener("click", CaseyCost);
+  flsubmitbtn.addEventListener("click", fleet);
+  rcsubmitbtn.addEventListener("click", racetrac);
 });
 
 
