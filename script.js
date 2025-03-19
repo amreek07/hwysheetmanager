@@ -120,8 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const workbook = XLSX.read(data, { type: "array" });
       const sheetName = workbook.SheetNames[0]; // Get first sheet
       const sheet = workbook.Sheets[sheetName];
-      caJsonData = XLSX.utils.sheet_to_json(sheet, {range: 6}); // Convert sheet to JSON
-      // console.log(jsonData);
+      caJsonData = XLSX.utils.sheet_to_json(sheet, {range: 3}); // Convert sheet to JSON
+      caJsonData = caJsonData.filter(row => row.Savings !== "N/A" && row.Savings !== "" && row.Savings !== null && row.Savings !== undefined);
+      // console.log("testing--------->");
+      // console.log(caJsonData);
     };
     reader.readAsArrayBuffer(uploadedFile); // Read the file
   });
@@ -129,25 +131,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const caseyCalculation = (e) =>{
     console.log('testing->');
     console.log(e);
-    let retail_price = Number(e.Price);
-    let fuel_price = Number(e.Price_1);
-    let saving_price = (retail_price - fuel_price );
-    let hwyCostSaving = (7 / 10) * saving_price;
-    let difference = (retail_price - hwyCostSaving).toFixed(3);
-    let discount = (retail_price - difference).toFixed(3);
-    let travelcenter = e["Travel Center"];
+      const sheetSaving = Math.max(0, Number(e.Savings));
+      const sheetRetail = Number(e["Retail Price"]);
+      const hwyCostSaving = (7 / 10) * sheetSaving;
+      const difference = (sheetRetail - hwyCostSaving).toFixed(3);
+      const discount = (sheetRetail - difference).toFixed(3);
+      console.log("diff===>",discount);
+      // const cleanName = e.ts_name.replace(/'/g, ""); //remove ' from the name of travelcenters
     return {
-      travelcenter: travelcenter,
-      merchant: e["Merchant ID"],
-      price: retail_price.toFixed(3),
+      travelcenter: e["Caseys Site #"],
+      merchant: e["Rack ID"],
+      price: sheetRetail.toFixed(3),
       difference: difference,
-      state: e.ST,
+      state: e.State,
       discount: discount,
     };
   }
   const CaseyCost = () => {
     let newcaseyData = [];
-    taJsonData.forEach((data) => {
+    caJsonData.forEach((data) => {
       let calculatedData = caseyCalculation(data);
       newcaseyData.push(calculatedData);
     });
@@ -156,17 +158,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
- 
+  //sap bros data process
 
+  const sapBrosData = document.querySelector('#sapText');
+  const sapBrosBtn = document.querySelector('#sapBroProcess');
+
+  sapBrosData.addEventListener('change', ()=>{
+    const sapBroInputText = sapBrosData.value
+     
+    const headers = ["Location", "State", "Cost Plus Price", "Retail Minus Price", "Your Price", "Posted Retail", "Your Savings"];
   
 
+    console.log(typeof sapBroInputText); 
+    console.log(sapBroInputText); 
+    // sapBroInputText.forEach((value)=>{
+    //   console.log(value);
+    // })
+    // console.log(sapBrosData.value);
 
+  })
 
 //download csv all files
   const downloadCSV = (processedData, fileName) => {
     const worksheet = XLSX.utils.json_to_sheet(processedData); // Convert JSON data to a worksheet
     const csvContent = XLSX.utils.sheet_to_csv(worksheet); // Convert worksheet to CSV format
-    
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
