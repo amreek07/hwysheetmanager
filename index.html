@@ -61,45 +61,51 @@
                 <input type="text" placeholder="No Choosen File" class="inputFileCasey inputFile"/>
                 <input type="file" name="casheet" id="casheet" style="display: none" />
               </div>
-              <button id="caSubmitBtn" class="subbtn">Submit</button>
+              <button id="caSubmitBtn" class="subbtn">Download Casey</button>
             </div>
-        </div>
+          </div>
         </div>
 
         <div class="container fleetContainer" style="display: none">
             <div class="inputSection">
-            <label for="flsheet">7 Fleet</label>
-            <div id="chooseFileFleet" class="chooseFile">Choose File</div>
-            <input
-              type="text"
-              placeholder="No Choosen File"
-              class="inputFileFleet inputFile"
-            />
-            <input type="file" name="flsheet" id="flsheet" style="display: none" />
+              <label for="flsheet">7 Fleet</label>
+              <div class="chooseFileSection">
+                <div style="display: flex;">
+                  <div id="chooseFileFleet" class="chooseFile">Choose File</div>
+                  <input type="text" placeholder="No Choosen File" class="inputFileFleet inputFile" />
+                  <input type="file" name="flsheet" id="flsheet" style="display: none" />
+                </div>
+                <button id="flSubmitBtn" class="subbtn">Download 7-Fleet</button>
+              </div>
             </div>
-            <button id="flSubmitBtn">Download 7-Fleet</button>
           </div>
 
 
           <div class="container raceContainer" style="display: none">
             <div class="inputSection">
-            <label for="rcsheet">Ractrac</label>
-            <div id="chooseFileRace" class="chooseFile">Choose File</div>
-            <input
-              type="text"
-              placeholder="No Choosen File"
-              class="inputFileRace inputFile"
-            />
-            <input type="file" name="rcsheet" id="rcsheet" style="display: none"/>
-        </div>
-            <button id="rcSubmitBtn">Download Racetrac</button>
+              <label for="rcsheet">Ractrac</label>
+              <div class="chooseFileSection">
+                <div style="display: flex;">
+                  <div id="chooseFileRace" class="chooseFile">Choose File</div>
+                  <input type="text" placeholder="No Choosen File" class="inputFileRace inputFile" />
+                  <input type="file" name="rcsheet" id="rcsheet" style="display: none"/>
+                </div>
+                <button id="rcSubmitBtn" class="subbtn">Download Racetrac</button>
+              </div>
+            </div>
           </div>
 
         <div class="container sapBroContainer" style="display: none">
-            
-          <label for="sapbros">Sap Bros Data</label>
-          <textarea name="sapbros" id="sapText"></textarea>
-          <button id="sapBroProcess">Download Sap Bros data</button>
+          <div class="inputSection">
+            <label for="sapbros">Sap Bros Data</label>
+            <div class="chooseFileSection" style="height:40px;">
+              <div style="display: flex;">
+                <label for="" class="chooseFile" style="font-size: 14px;">Enter Text</label>
+                <textarea name="sapbros" id="sapText"></textarea>
+              </div>
+              <button id="sapBroProcess" class="subbtn">Download Sap Bros data</button>
+            </div>
+          </div>
         </div>
 
 

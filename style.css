@@ -16,6 +16,7 @@ main{
     margin: 12% auto;
     padding: 40px;
     background-color: #fff;
+    height: 45vh;
     
 }
 main .heading{
@@ -89,3 +90,8 @@ select ,select option{
     width: 185px;
     border: none;
 }
+
+textarea {
+    resize: none;
+    border-radius: 0px !important;
+  }
