@@ -2,58 +2,26 @@ document.addEventListener("DOMContentLoaded", () => {
   //select box selection
 
   const selectBox = document.querySelector("#sheetName");
-  const ambestContainer = document.querySelector(".ambestContainer");
-  const taContainer = document.querySelector(".taContainer");
-  const caseyContainer = document.querySelector(".caseyContainer");
-  const sapBroContainer = document.querySelector(".sapBroContainer");
-  const fleetContainer = document.querySelector(".fleetContainer");
-  const raceContainer = document.querySelector(".raceContainer");
+  const containers = {
+    ambest: document.querySelector(".ambestContainer"),
+    "ta-petro": document.querySelector(".taContainer"),
+    casey: document.querySelector(".caseyContainer"),
+    sapbros: document.querySelector(".sapBroContainer"),
+    "7-Fleet": document.querySelector(".fleetContainer"),
+    Ractrac: document.querySelector(".raceContainer"),
+  };
 
-  selectBox.addEventListener("change", () => {
-    console.log(selectBox.value);
-    if (selectBox.value === "ambest") {
-      ambestContainer.style.display = "block";
-      taContainer.style.display = "none";
-      caseyContainer.style.display = "none";
-      sapBroContainer.style.display = "none";
-      fleetContainer.style.display = "none";
-      raceContainer.style.display = "none";
-    } else if (selectBox.value === "ta-petro") {
-      ambestContainer.style.display = "none";
-      taContainer.style.display = "block";
-      caseyContainer.style.display = "none";
-      sapBroContainer.style.display = "none";
-      fleetContainer.style.display = "none";
-      raceContainer.style.display = "none";
-    } else if (selectBox.value === "casey") {
-      ambestContainer.style.display = "none";
-      taContainer.style.display = "none";
-      caseyContainer.style.display = "block";
-      sapBroContainer.style.display = "none";
-      fleetContainer.style.display = "none";
-      raceContainer.style.display = "none";
-    } else if (selectBox.value === "sapbros") {
-      ambestContainer.style.display = "none";
-      taContainer.style.display = "none";
-      caseyContainer.style.display = "none";
-      sapBroContainer.style.display = "block";
-      fleetContainer.style.display = "none";
-      raceContainer.style.display = "none";
-    } else if (selectBox.value === "7-Fleet") {
-      ambestContainer.style.display = "none";
-      taContainer.style.display = "none";
-      caseyContainer.style.display = "none";
-      sapBroContainer.style.display = "none";
-      fleetContainer.style.display = "block";
-      raceContainer.style.display = "none";
-    } else if (selectBox.value === "Ractrac") {
-      ambestContainer.style.display = "none";
-      taContainer.style.display = "none";
-      caseyContainer.style.display = "none";
-      sapBroContainer.style.display = "none";
-      fleetContainer.style.display = "none";
-      raceContainer.style.display = "block";
-    }
+  // selectBox.addEventListener("change", () => {
+    selectBox.addEventListener("change", () => {
+      console.log(selectBox.value);
+    
+      // Hide all containers
+      Object.values(containers).forEach(container => container.style.display = "none");
+    
+      // Show selected container if it exists
+      if (containers[selectBox.value]) {
+        containers[selectBox.value].style.display = "block";
+      }
   });
 
   //ambest js code
