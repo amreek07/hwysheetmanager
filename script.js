@@ -117,12 +117,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //ta petro data sheet functionality
   const taPetroFile = document.querySelector("#taSheet");
-  const taSubmitBtn = document.querySelector('#taSubmitBtn');
-  const chooseFilePetro = document.querySelector('#chooseFilePetro');
-  const inputFilePetro = document.querySelector('.inputFilePetro');
+  const taSubmitBtn = document.querySelector("#taSubmitBtn");
+  const chooseFilePetro = document.querySelector("#chooseFilePetro");
+  const inputFilePetro = document.querySelector(".inputFilePetro");
   let taJsonData;
-
-
 
   chooseFilePetro.addEventListener("click", () => {
     taPetroFile.click();
@@ -133,11 +131,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   taPetroFile.addEventListener("change", () => {
     if (taPetroFile.files.length > 0) {
-      inputFilePetro.value = taPetroFile.files[0].name; 
+      inputFilePetro.value = taPetroFile.files[0].name;
     }
   });
-
-
 
   taPetroFile.addEventListener("change", (event) => {
     const uploadedFile = event.target.files[0];
@@ -180,48 +176,69 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadCSV(newTaPetroData, "Ta Petro");
   };
 
-  //   //casey cost plus sheet functionality
-  //     const CaseyFile = document.querySelector('#casheet');
-  //     let caJsonData;
-  //     CaseyFile.addEventListener("change", (event) => {
-  //       const uploadedFile = event.target.files[0];
-  //       const reader = new FileReader();
-  //       reader.onload = function (e) {
-  //         const data = new Uint8Array(e.target.result);
-  //         const workbook = XLSX.read(data, { type: "array" });
-  //         const sheetName = workbook.SheetNames[0]; // Get first sheet
-  //         const sheet = workbook.Sheets[sheetName];
-  //         caJsonData = XLSX.utils.sheet_to_json(sheet, {range: 3}); // Convert sheet to JSON
-  //         caJsonData = caJsonData.filter(row => row.Savings !== "N/A" && row.Savings !== "" && row.Savings !== null && row.Savings !== undefined);
-  //       };
-  //       reader.readAsArrayBuffer(uploadedFile); // Read the file
-  //     });
+  //casey cost plus sheet functionality
+  const CaseyFile = document.querySelector("#casheet");
+  const caSubmitBtn = document.querySelector("#caSubmitBtn");
+  const chooseFileCasey = document.querySelector("#chooseFileCasey");
+  const inputFileCasey = document.querySelector(".inputFileCasey");
+  let caJsonData;
 
-  //   const caseyCalculation = (e) =>{
-  //     console.log('testing->');
-  //     console.log(e);
-  //       const sheetSaving = Math.max(0, Number(e.Savings));
-  //       const sheetRetail = Number(e["Retail Price"]);
-  //       const hwyCostSaving = (7 / 10) * sheetSaving;
-  //       const difference = (sheetRetail - hwyCostSaving).toFixed(3);
-  //       const discount = (sheetRetail - difference).toFixed(3);
-  //     return {
-  //       travelcenter: e["Caseys Site #"],
-  //       merchant: e["Rack ID"],
-  //       price: sheetRetail.toFixed(3),
-  //       difference: difference,
-  //       state: e.State,
-  //       discount: discount,
-  //     };
-  //   }
-  //   const CaseyCost = () => {
-  //     let newcaseyData = [];
-  //     caJsonData.forEach((data) => {
-  //       let calculatedData = caseyCalculation(data);
-  //       newcaseyData.push(calculatedData);
-  //     });
-  //     downloadCSV(newcaseyData, "Caseys Cost");
-  //   }
+  chooseFileCasey.addEventListener("click", () => {
+    CaseyFile.click();
+  });
+  inputFileCasey.addEventListener("click", () => {
+    CaseyFile.click();
+  });
+
+  CaseyFile.addEventListener("change", () => {
+    if (CaseyFile.files.length > 0) {
+      inputFileCasey.value = CaseyFile.files[0].name;
+    }
+  });
+
+  CaseyFile.addEventListener("change", (event) => {
+    const uploadedFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheetName = workbook.SheetNames[0]; // Get first sheet
+      const sheet = workbook.Sheets[sheetName];
+      caJsonData = XLSX.utils.sheet_to_json(sheet, { range: 3 }); // Convert sheet to JSON
+      caJsonData = caJsonData.filter(
+        (row) =>
+          row.Savings !== "N/A" &&
+          row.Savings !== "" &&
+          row.Savings !== null &&
+          row.Savings !== undefined
+      );
+    };
+    reader.readAsArrayBuffer(uploadedFile); // Read the file
+  });
+
+  const caseyCalculation = (e) => {
+    const sheetSaving = Math.max(0, Number(e.Savings));
+    const sheetRetail = Number(e["Retail Price"]);
+    const hwyCostSaving = (7 / 10) * sheetSaving;
+    const difference = (sheetRetail - hwyCostSaving).toFixed(3);
+    const discount = (sheetRetail - difference).toFixed(3);
+    return {
+      travelcenter: e["Caseys Site #"],
+      merchant: e["Rack ID"],
+      price: sheetRetail.toFixed(3),
+      difference: difference,
+      state: e.State,
+      discount: discount,
+    };
+  };
+  const CaseyCost = () => {
+    let newcaseyData = [];
+    caJsonData.forEach((data) => {
+      let calculatedData = caseyCalculation(data);
+      newcaseyData.push(calculatedData);
+    });
+    downloadCSV(newcaseyData, "Caseys Cost");
+  };
 
   //   // 7 Fleet sheet function
   //   const FleetFile = document.querySelector('#flsheet');
@@ -419,7 +436,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   submitBtn.addEventListener("click", ambest);
   taSubmitBtn.addEventListener("click", taPetro);
-  // casubmitbtn.addEventListener("click", CaseyCost);
+  caSubmitBtn.addEventListener("click", CaseyCost);
   // flsubmitbtn.addEventListener("click", fleet);
   // rcsubmitbtn.addEventListener("click", racetrac);
   // sapsubmitbtn.addEventListener("click", Sapp);
