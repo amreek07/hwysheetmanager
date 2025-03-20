@@ -43,9 +43,9 @@
             <label for="sheet">Ta Petro</label>
             <div class="chooseFileSection">
               <div style="display: flex;">
-                <div id="chooseFilePetero" class="chooseFile">Choose File</div>
+                <div id="chooseFilePetro" class="chooseFile">Choose File</div>
                 <input type="text" placeholder="No Choosen File" class="inputFilePetro inputFile" />
-                <input type="file" id="ambestSheet"  class="fileUpload" style="display: none" />
+                <input type="file" id="taSheet"  class="fileUpload" style="display: none" />
               </div>
               <button id="taSubmitBtn" class="subbtn">Download TaPetro</button>
             </div>
@@ -66,17 +66,26 @@
           <button id="caSubmitBtn">Submit</button>
         </div>
 
+        <div class="container fleetContainer" style="display: none">
+            <div class="inputSection">
+            <label for="flsheet">7 Fleet</label>
+            <div id="chooseFileFleet" class="chooseFile">Choose File</div>
+            <input
+              type="text"
+              placeholder="No Choosen File"
+              class="inputFileFleet inputFile"
+            />
+            <input type="file" name="flsheet" id="flsheet" style="display: none" />
+            </div>
+            <button id="flSubmitBtn">Submit</button>
+          </div>
+
         <div class="container sapBroContainer" style="display: none">
           <label for="sapbros">Sap Bros Data</label>
           <textarea name="sapbros" id="sapText"></textarea>
           <button id="sapBroProcess">Download Sap Bros data</button>
         </div>
 
-        <div class="container fleetContainer" style="display: none">
-          <label for="flsheet">7 Fleet</label>
-          <input type="file" name="flsheet" id="flsheet" />
-          <button id="flSubmitBtn">Submit</button>
-        </div>
 
         <div class="container raceContainer" style="display: none">
           <label for="rcsheet">Ractrac</label>
