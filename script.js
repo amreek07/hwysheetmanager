@@ -149,8 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const taPetroCalculation = (e) => {
-    console.log("testing->");
-    console.log(e);
+   
     let retail_price = Number(e.Price);
     let fuel_price = Number(e.Price_1);
     let saving_price = retail_price - fuel_price;
@@ -240,46 +239,66 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadCSV(newcaseyData, "Caseys Cost");
   };
 
-  //   // 7 Fleet sheet function
-  //   const FleetFile = document.querySelector('#flsheet');
-  //   let FlJsonData;
-  //   FleetFile.addEventListener("change", (event) => {
-  //     const uploadedFile = event.target.files[0];
-  //     const reader = new FileReader();
-  //     reader.onload = function (e) {
-  //       const data = new Uint8Array(e.target.result);
-  //       const workbook = XLSX.read(data, { type: "array" });
-  //       const sheetName = workbook.SheetNames[0]; // Get first sheet
-  //       const sheet = workbook.Sheets[sheetName];
-  //       FlJsonData = XLSX.utils.sheet_to_json(sheet, {range: 0}); // Convert sheet to JSON
-  //     };
-  //     reader.readAsArrayBuffer(uploadedFile); // Read the file
-  //   });
+    // 7 Fleet sheet function
+    const FleetFile = document.querySelector('#flsheet');
+    const flSubmitBtn = document.querySelector('#flSubmitBtn');
+    const chooseFileFleet = document.querySelector('#chooseFileFleet');
+    const inputFileFleet = document.querySelector('.inputFileFleet');
+    let FlJsonData;
 
-  //   const fleetCalculation = (e) =>{
-  //     console.log(e);
-  //       const sheetSaving = Number(e["Savings/Gal"]);
-  //       const sheetRetail = Number(e["Retail Price"]);
-  //       const hwyCostSaving = (7 / 10) * sheetSaving;
-  //       const difference = (sheetRetail - hwyCostSaving).toFixed(3);
-  //       const discount = (sheetRetail - difference).toFixed(3);
-  //     return {
-  //       travelcenter: e["Store#"],
-  //       merchant: e["Comdata"],
-  //       price: sheetRetail.toFixed(3),
-  //       difference: difference,
-  //       state: e.State,
-  //       discount: discount,
-  //     };
-  //   }
-  //   const fleet = () => {
-  //     let newfleetData = [];
-  //     FlJsonData.forEach((data) => {
-  //       let calculatedData = fleetCalculation(data);
-  //       newfleetData.push(calculatedData);
-  //     });
-  //     downloadCSV(newfleetData, "7 Fleet");
-  //   }
+
+    chooseFileFleet.addEventListener("click", () => {
+      FleetFile.click();
+    });
+    inputFileFleet.addEventListener("click", () => {
+      FleetFile.click();
+    });
+  
+    FleetFile.addEventListener("change", () => {
+      if (FleetFile.files.length > 0) {
+        inputFileFleet.value = FleetFile.files[0].name;
+      }
+    });
+
+
+
+    FleetFile.addEventListener("change", (event) => {
+      const uploadedFile = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0]; // Get first sheet
+        const sheet = workbook.Sheets[sheetName];
+        FlJsonData = XLSX.utils.sheet_to_json(sheet, {range: 0}); // Convert sheet to JSON
+      };
+      reader.readAsArrayBuffer(uploadedFile); // Read the file
+    });
+
+    const fleetCalculation = (e) =>{
+      
+        const sheetSaving = Number(e["Savings/Gal"]);
+        const sheetRetail = Number(e["Retail Price"]);
+        const hwyCostSaving = (7 / 10) * sheetSaving;
+        const difference = (sheetRetail - hwyCostSaving).toFixed(3);
+        const discount = (sheetRetail - difference).toFixed(3);
+      return {
+        travelcenter: e["Store#"],
+        merchant: e["Comdata"],
+        price: sheetRetail.toFixed(3),
+        difference: difference,
+        state: e.State,
+        discount: discount,
+      };
+    }
+    const fleet = () => {
+      let newfleetData = [];
+      FlJsonData.forEach((data) => {
+        let calculatedData = fleetCalculation(data);
+        newfleetData.push(calculatedData);
+      });
+      downloadCSV(newfleetData, "7 Fleet");
+    }
 
   //   //Ractrac sheet function
   //    const RaceFile = document.querySelector('#rcsheet');
@@ -437,7 +456,7 @@ document.addEventListener("DOMContentLoaded", () => {
   submitBtn.addEventListener("click", ambest);
   taSubmitBtn.addEventListener("click", taPetro);
   caSubmitBtn.addEventListener("click", CaseyCost);
-  // flsubmitbtn.addEventListener("click", fleet);
+  flSubmitBtn.addEventListener("click", fleet);
   // rcsubmitbtn.addEventListener("click", racetrac);
   // sapsubmitbtn.addEventListener("click", Sapp);
 });
