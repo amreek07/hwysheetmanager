@@ -1,49 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <div class="heading">HWY Fuel Sheet Processor</div>
 
-    <div class="container">
-        <label for="sheet">Ambest</label>
-        <input type="file" name="sheet" id="sheet">
-        <button id="submitBtn">Submit</button>
-    </div>
+      <div class="mainInputContainer">
+        <div class="selectBox">
+          <label for="sheetSelector">Select Sheet type:</label>
+          <select name="sheetSelector" id="sheetName">
+            <option value="ambest">Ambest</option>
+            <option value="ta-petro">Ta Petro</option>
+            <option value="casey">Casey</option>
+            <option value="sapbros">Sap Bros</option>
+            <option value="7-Fleet">7 Fleet</option>
+            <option value="Ractrac">Ractrac</option>
+          </select>
+        </div>
+        <div class="container">
+          <div class="inputSection">
+            <label for="sheet">Ambest</label>
+          <input type="file" name="sheet" id="sheet" />
+          </div>
+          <button id="submitBtn">Submit</button>
+        </div>
 
-    <div class="container">
-        <label for="tasheet">Ta Petro</label>
-        <input type="file" name="tasheet" id="taSheet">
-        <button id="taSubmitBtn">Submit</button>
-    </div>
+        <div class="container" style="display: none">
+          <label for="tasheet">Ta Petro</label>
+          <input type="file" name="tasheet" id="taSheet" />
+          <button id="taSubmitBtn">Submit</button>
+        </div>
 
-    <div class="container">
-        <label for="casheet">Caseys Cost Plus</label>
-        <input type="file" name="casheet" id="casheet">
-        <button id="caSubmitBtn">Submit</button>
-    </div>
+        <div class="container" style="display: none">
+          <label for="casheet">Casey Cost Plus</label>
+          <input type="file" name="casheet" id="casheet" />
+          <button id="caSubmitBtn">Submit</button>
+        </div>
 
-    <div class="container">
-        <label for="sapbros">Sap Bros Data</label>
-        <textarea name="sapbros" id="sapText"></textarea>
-        <button id="sapBroProcess">Download Sap Bros data</button>
-    </div>
+        <div class="container" style="display: none">
+          <label for="sapbros">Sap Bros Data</label>
+          <textarea name="sapbros" id="sapText"></textarea>
+          <button id="sapBroProcess">Download Sap Bros data</button>
+        </div>
 
-    <div class="container">
-        <label for="flsheet">7 Fleet</label>
-        <input type="file" name="flsheet" id="flsheet">
-        <button id="flSubmitBtn">Submit</button>
-    </div>
+        <div class="container" style="display: none">
+          <label for="flsheet">7 Fleet</label>
+          <input type="file" name="flsheet" id="flsheet" />
+          <button id="flSubmitBtn">Submit</button>
+        </div>
 
-    <div class="container">
-        <label for="rcsheet">Ractrac</label>
-        <input type="file" name="rcsheet" id="rcsheet">
-        <button id="rcSubmitBtn">Submit</button>
-    </div>
+        <div class="container" style="display: none">
+          <label for="rcsheet">Ractrac</label>
+          <input type="file" name="rcsheet" id="rcsheet" />
+          <button id="rcSubmitBtn">Submit</button>
+        </div>
+      </div>
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

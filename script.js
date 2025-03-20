@@ -2,6 +2,11 @@
 document.addEventListener("DOMContentLoaded", () => {
     const file = document.querySelector("#sheet");
     const submitBtn = document.querySelector("#submitBtn");
+    const taSubmitBtn = document.querySelector('#taSubmitBtn');
+    const casubmitbtn = document.querySelector('#caSubmitBtn');
+    const flsubmitbtn = document.querySelector('#flSubmitBtn');
+    const rcsubmitbtn = document.querySelector('#rcSubmitBtn');
+    const sapsubmitbtn = document.querySelector('#sapBroProcess');
     let jsonData;
       file.addEventListener("change", (event) => {
         const uploadedFile = event.target.files[0];
@@ -322,11 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
     URL.revokeObjectURL(url);
   };
   //all btn click functionality
-  const taSubmitBtn = document.querySelector('#taSubmitBtn');
-  const casubmitbtn = document.querySelector('#caSubmitBtn');
-  const flsubmitbtn = document.querySelector('#flSubmitBtn');
-  const rcsubmitbtn = document.querySelector('#rcSubmitBtn');
-  const sapsubmitbtn = document.querySelector('#sapBroProcess');
+
   submitBtn.addEventListener("click", ambest);
   taSubmitBtn.addEventListener("click", taPetro);
   casubmitbtn.addEventListener("click", CaseyCost);
