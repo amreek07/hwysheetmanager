@@ -25,14 +25,32 @@
         <div class="container">
           <div class="inputSection">
             <label for="sheet">Ambest</label>
-          <input type="file" name="sheet" id="sheet" />
+          <!-- <input type="file" name="sheet" id="sheet" /> -->
+          <div class="chooseFileSection">
+            <div id="chooseFile">Choose File</div>
+            <input type="text" placeholder="No Choosen File" class="inputFile" id="sheet" />
+            <input type="file" class="fileUpload" style="display: none" />
+          </div>
           </div>
           <button id="submitBtn">Submit</button>
         </div>
 
-        <div class="container" style="display: none">
+        <!-- <div class="container" style="display: none">
           <label for="tasheet">Ta Petro</label>
           <input type="file" name="tasheet" id="taSheet" />
+          <button id="taSubmitBtn">Submit</button>
+        </div> -->
+
+        <div class="container">
+          <div class="inputSection">
+            <label for="tasheet">Ta Petro</label>
+          <!-- <input type="file" name="sheet" id="sheet" /> -->
+          <div class="chooseFileSection">
+            <div id="chooseFile">Choose File</div>
+            <input type="text" placeholder="No Choosen File" class="inputFile" id="taSheet" />
+            <input type="file" class="fileUpload" style="display: none" id="taSheet" />
+          </div>
+          </div>
           <button id="taSubmitBtn">Submit</button>
         </div>
 
@@ -64,5 +82,26 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="script.js"></script>
+    <script>
+      const inputFile = document.querySelectorAll(".inputFile");
+      const fileUpload = document.querySelectorAll(".fileUpload");
+      const chooseFile = document.querySelectorAll("#chooseFile");
+
+      inputFile.addEventListener("click", () => {
+        console.log('testing--->');
+        fileUpload.click();
+      });
+      chooseFile.addEventListener("click", () => {
+        console.log('testing--->');
+        fileUpload.click();
+      });
+
+      fileUpload.addEventListener("change", () => {
+        console.log('testing--->');
+        if (fileUpload.files.length > 0) {
+          inputFile.value = fileUpload.files[0].name; // Displays selected file name in the text input
+        }
+      });
+    </script>
   </body>
 </html>

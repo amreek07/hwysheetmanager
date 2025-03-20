@@ -50,3 +50,24 @@ select ,select option{
     /* border: 1px solid grey; */
     display: flex;
 }
+
+.chooseFileSection {
+    display: flex;
+  }
+#chooseFile {
+background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(9, 9, 121, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+) !important;
+color: #fff !important;
+padding: 10px !important;
+text-align: center !important;
+align-items: center !important;
+height: 20px !important;
+cursor: pointer !important;
+}
+.inputFile {
+height: 33px;
+}
