@@ -49,11 +49,12 @@ select ,select option{
 .container{
     /* border: 1px solid grey; */
     display: flex;
+    padding: 10px;
 }
 
 .chooseFileSection {
     display: flex;
-    gap: 90px
+    gap: 145px;
   }
 .chooseFile {
     background: linear-gradient(
@@ -71,8 +72,10 @@ select ,select option{
     border: none;
 }
 .inputFile {
-    height: 33px;
-    width: 198px
+    height: 36px;
+    width: 180px;
+    border-radius: 0px !important;
+    text-indent: 10px;
 }
 
 .subbtn{
@@ -84,6 +87,5 @@ select ,select option{
     );
     color: #fff;
     width: 185px;
-    margin-right: 45px;
     border: none;
 }
