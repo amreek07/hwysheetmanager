@@ -14,6 +14,7 @@
         <div class="selectBox">
           <label for="sheetSelector">Select Sheet type:</label>
           <select name="sheetSelector" id="sheetName">
+            <option value="" selected>Please select sheet type</option>
             <option value="ambest">Ambest</option>
             <option value="ta-petro">Ta Petro</option>
             <option value="casey">Casey</option>
@@ -22,29 +23,29 @@
             <option value="Ractrac">Ractrac</option>
           </select>
         </div>
-        <div class="container">
+        <div class="container ambestContainer" style="display: none;">
           <div class="inputSection">
             <label for="sheet">Ambest</label>
           <!-- <input type="file" name="sheet" id="sheet" /> -->
           <div class="chooseFileSection">
-            <div id="chooseFile">Choose File</div>
-            <input type="text" placeholder="No Choosen File" class="inputFile" id="sheet" />
-            <input type="file" class="fileUpload" style="display: none" />
+            <div id="chooseFileAmbest" class="chooseFile">Choose File</div>
+            <input type="text" placeholder="No Choosen File" class="inputFileAmbest inputFile" />
+            <input type="file" id="ambestSheet"  class="fileUpload" style="display: none" />
           </div>
           </div>
           <button id="submitBtn">Submit</button>
         </div>
 
-        <!-- <div class="container" style="display: none">
+        <div class="container taContainer" style="display: none">
           <label for="tasheet">Ta Petro</label>
           <input type="file" name="tasheet" id="taSheet" />
           <button id="taSubmitBtn">Submit</button>
-        </div> -->
+        </div>
 
-        <div class="container">
+        <!-- <div class="container">
           <div class="inputSection">
             <label for="tasheet">Ta Petro</label>
-          <!-- <input type="file" name="sheet" id="sheet" /> -->
+         <input type="file" name="sheet" id="sheet" /> 
           <div class="chooseFileSection">
             <div id="chooseFile">Choose File</div>
             <input type="text" placeholder="No Choosen File" class="inputFile" id="taSheet" />
@@ -52,27 +53,27 @@
           </div>
           </div>
           <button id="taSubmitBtn">Submit</button>
-        </div>
+        </div> -->
 
-        <div class="container" style="display: none">
+       <div class="container caseyContainer" style="display: none">
           <label for="casheet">Casey Cost Plus</label>
           <input type="file" name="casheet" id="casheet" />
           <button id="caSubmitBtn">Submit</button>
         </div>
 
-        <div class="container" style="display: none">
+        <div class="container sapBroContainer" style="display: none">
           <label for="sapbros">Sap Bros Data</label>
           <textarea name="sapbros" id="sapText"></textarea>
           <button id="sapBroProcess">Download Sap Bros data</button>
         </div>
 
-        <div class="container" style="display: none">
-          <label for="flsheet">7 Fleet</label>
-          <input type="file" name="flsheet" id="flsheet" />
-          <button id="flSubmitBtn">Submit</button>
-        </div>
+        <div class="container fleetContainer" style="display: none">
+            <label for="flsheet">7 Fleet</label>
+            <input type="file" name="flsheet" id="flsheet" />
+            <button id="flSubmitBtn">Submit</button>
+          </div>
 
-        <div class="container" style="display: none">
+         <div class="container raceContainer" style="display: none">
           <label for="rcsheet">Ractrac</label>
           <input type="file" name="rcsheet" id="rcsheet" />
           <button id="rcSubmitBtn">Submit</button>
@@ -82,26 +83,25 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="script.js"></script>
-    <script>
+    <!-- <script>
       const inputFile = document.querySelectorAll(".inputFile");
       const fileUpload = document.querySelectorAll(".fileUpload");
       const chooseFile = document.querySelectorAll("#chooseFile");
 
       inputFile.addEventListener("click", () => {
-        console.log('testing--->');
+        
         fileUpload.click();
       });
       chooseFile.addEventListener("click", () => {
-        console.log('testing--->');
+       
         fileUpload.click();
       });
 
       fileUpload.addEventListener("change", () => {
-        console.log('testing--->');
         if (fileUpload.files.length > 0) {
           inputFile.value = fileUpload.files[0].name; // Displays selected file name in the text input
         }
       });
-    </script>
+    </script>  -->
   </body>
 </html>

@@ -44,7 +44,7 @@ main .heading{
     margin-bottom: 12px;
 }
 select ,select option{
-    font-size: 18px;
+    font-size: 16px;
 }
 .container{
     /* border: 1px solid grey; */
@@ -54,7 +54,7 @@ select ,select option{
 .chooseFileSection {
     display: flex;
   }
-#chooseFile {
+.chooseFile {
 background: linear-gradient(
     90deg,
     rgba(2, 0, 36, 1) 0%,
