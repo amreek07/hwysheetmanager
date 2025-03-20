@@ -300,138 +300,157 @@ document.addEventListener("DOMContentLoaded", () => {
       downloadCSV(newfleetData, "7 Fleet");
     }
 
-  //   //Ractrac sheet function
-  //    const RaceFile = document.querySelector('#rcsheet');
-  //    let RcJsonData;
-  //    RaceFile.addEventListener("change", (event) => {
-  //      const uploadedFile = event.target.files[0];
-  //      const reader = new FileReader();
-  //      reader.onload = function (e) {
-  //        const data = new Uint8Array(e.target.result);
-  //        const workbook = XLSX.read(data, { type: "array" });
-  //        const sheetName = workbook.SheetNames[0]; // Get first sheet
-  //        const sheet = workbook.Sheets[sheetName];
-  //        RcJsonData = XLSX.utils.sheet_to_json(sheet, {range: 4}); // Convert sheet to JSON
-  //      };
-  //      reader.readAsArrayBuffer(uploadedFile); // Read the file
-  //    });
+    //Ractrac sheet function
+     const RaceFile = document.querySelector('#rcsheet');
+     const chooseFileRace = document.querySelector('#chooseFileRace');
+     const rcSubmitBtn = document.querySelector('#rcSubmitBtn');
+     const inputFileRace = document.querySelector('.inputFileRace');
+     let RcJsonData;
 
-  //    const RaceCalculation = (e) =>{
-  //     console.log(e);
-  //     let retail_price = Number(e["Retail Price"]);
-  //     let fuel_price = Number(e["Final Price"]);
-  //     let saving_price = (retail_price - fuel_price );
-  //     let hwyCostSaving = (7 / 10) * saving_price;
-  //     let difference = (retail_price - hwyCostSaving).toFixed(3);
-  //     let discount = (retail_price - difference).toFixed(3);
-  //      return {
-  //        travelcenter: e["City"],
-  //        merchant: e["Store ID"],
-  //        price: retail_price.toFixed(3),
-  //        difference: difference,
-  //        state: e.State,
-  //        discount: discount,
-  //      };
-  //    }
 
-  //    const racetrac = () => {
-  //      let newraceData = [];
-  //      RcJsonData.forEach((data) => {
-  //        let calculatedData = RaceCalculation(data);
-  //        newraceData.push(calculatedData);
-  //      });
-  //      downloadCSV(newraceData, "Racrtac");
-  //    }
+     chooseFileRace.addEventListener("click", () => {
+      RaceFile.click();
+    });
+    inputFileFleet.addEventListener("click", () => {
+      RaceFile.click();
+    });
+  
+    RaceFile.addEventListener("change", () => {
+      if (RaceFile.files.length > 0) {
+        inputFileRace.value = RaceFile.files[0].name;
+      }
+    });
 
-  //   //sap bros data function
-  //     const sapBrosData = document.querySelector('#sapText');
-  //     let sappjsonData = [];
+     RaceFile.addEventListener("change", (event) => {
+       const uploadedFile = event.target.files[0];
+       const reader = new FileReader();
+       reader.onload = function (e) {
+         const data = new Uint8Array(e.target.result);
+         const workbook = XLSX.read(data, { type: "array" });
+         const sheetName = workbook.SheetNames[0]; // Get first sheet
+         const sheet = workbook.Sheets[sheetName];
+         RcJsonData = XLSX.utils.sheet_to_json(sheet, {range: 4}); // Convert sheet to JSON
+       };
+       reader.readAsArrayBuffer(uploadedFile); // Read the file
+     });
 
-  //     sapBrosData.addEventListener('input', () => {
-  //         processSapBrosData();
-  //     });
+     const RaceCalculation = (e) =>{
+      console.log(e);
+      let retail_price = Number(e["Retail Price"]);
+      let fuel_price = Number(e["Final Price"]);
+      let saving_price = (retail_price - fuel_price );
+      let hwyCostSaving = (7 / 10) * saving_price;
+      let difference = (retail_price - hwyCostSaving).toFixed(3);
+      let discount = (retail_price - difference).toFixed(3);
+       return {
+         travelcenter: e["City"],
+         merchant: e["Store ID"],
+         price: retail_price.toFixed(3),
+         difference: difference,
+         state: e.State,
+         discount: discount,
+       };
+     }
 
-  //     const processSapBrosData = () => {
-  //         const sapBroInputText = sapBrosData.value.trim();
-  //         if (!sapBroInputText) {
-  //             return;
-  //         }
-  //         let lines = sapBroInputText.split("\n").map(line => line.trim()).filter(line => line);
-  //         const headers = [
-  //             "Location",
-  //             "State",
-  //             "Cost Plus Price",
-  //             "Retail Minus Price",
-  //             "Your Price",
-  //             "Posted Retail",
-  //             "Your Savings"
-  //         ];
-  //         sappjsonData = [];
-  //         let dataStartIndex = 0;
-  //         for (let i = 0; i < lines.length; i++) {
-  //             if (lines[i] === "Your Savings") {
-  //                 dataStartIndex = i + 1;
-  //                 break;
-  //             }
-  //         }
-  //         for (let i = dataStartIndex; i < lines.length; i += headers.length) {
-  //             let row = lines.slice(i, i + headers.length);
+     const racetrac = () => {
+       let newraceData = [];
+       RcJsonData.forEach((data) => {
+         let calculatedData = RaceCalculation(data);
+         newraceData.push(calculatedData);
+       });
+       downloadCSV(newraceData, "Racrtac");
+     }
 
-  //             if (row.length === headers.length) {
-  //                 let jsonRow = {};
-  //                 headers.forEach((header, index) => {
-  //                     jsonRow[header] = row[index] || "";
-  //                 });
-  //                 sappjsonData.push(jsonRow);
-  //             }
-  //         }
-  //     };
+    //sap bros data function
+      const sapBrosData = document.querySelector('#sapText');
+      const sapBroProcess = document.querySelector('#sapBroProcess');
+      let sappjsonData = [];
 
-  //     const SappCalculation = (e) =>{
-  //       const merchantMapping = {
-  //         "Clearfield": "SAPB101",
-  //         "Cheyenne": "SAPB104",
-  //         "Columbus": "SAPB114",
-  //         "Council Bluffs": "SAPB110",
-  //         "Denver": "SAPB102",
-  //         "Fremont": "SAPB109",
-  //         "Harrisonville": "SAPB117",
-  //         "Junction City": "SAPB116",
-  //         "Lincoln": "SAPB112",
-  //         "Odessa": "SAPB111",
-  //         "Ogallala": "SAPB107",
-  //         "Omaha": "SAPB113",
-  //         "Percival": "SAPB108",
-  //         "Peru": "SAPB103",
-  //         "Salt Lake City": "SAPB105",
-  //         "Sidney": "SAPB106",
-  //         "York": "SAPB115"
-  //     };
-  //       const merchantID = merchantMapping[e["Location"]] || "Unknown";
-  //       const sheetSaving = Math.abs(Number(e["Your Savings"]));
-  //       const sheetRetail = Number(e["Posted Retail"]);
-  //       const hwyCostSaving = (7 / 10) * sheetSaving;
-  //       const difference = (sheetRetail - hwyCostSaving).toFixed(3);
-  //       const discount = (sheetRetail - difference).toFixed(3);
-  //       console.log("discount==>",discount);
-  //        return {
-  //          travelcenter: e["Location"],
-  //          merchant: merchantID,
-  //          price: sheetRetail.toFixed(3),
-  //          difference: difference,
-  //          state: e.State,
-  //          discount: discount,
-  //        };
-  //      }
+      sapBrosData.addEventListener('input', () => {
+          processSapBrosData();
+      });
 
-  //     const Sapp = () => {
-  //       let newSappData = [];
-  //       sappjsonData.forEach((data) => {
-  //         let calculatedData = SappCalculation(data);
-  //         newSappData.push(calculatedData);
-  //       });
-  //       downloadCSV(newSappData, "Sapp Bros");
-  //     }
+      const processSapBrosData = () => {
+          const sapBroInputText = sapBrosData.value.trim();
+          if (!sapBroInputText) {
+              return;
+          }
+          let lines = sapBroInputText.split("\n").map(line => line.trim()).filter(line => line);
+          const headers = [
+              "Location",
+              "State",
+              "Cost Plus Price",
+              "Retail Minus Price",
+              "Your Price",
+              "Posted Retail",
+              "Your Savings"
+          ];
+          sappjsonData = [];
+          let dataStartIndex = 0;
+          for (let i = 0; i < lines.length; i++) {
+              if (lines[i] === "Your Savings") {
+                  dataStartIndex = i + 1;
+                  break;
+              }
+          }
+          for (let i = dataStartIndex; i < lines.length; i += headers.length) {
+              let row = lines.slice(i, i + headers.length);
+
+              if (row.length === headers.length) {
+                  let jsonRow = {};
+                  headers.forEach((header, index) => {
+                      jsonRow[header] = row[index] || "";
+                  });
+                  sappjsonData.push(jsonRow);
+              }
+          }
+      };
+
+      const SappCalculation = (e) =>{
+        const merchantMapping = {
+          "Clearfield": "SAPB101",
+          "Cheyenne": "SAPB104",
+          "Columbus": "SAPB114",
+          "Council Bluffs": "SAPB110",
+          "Denver": "SAPB102",
+          "Fremont": "SAPB109",
+          "Harrisonville": "SAPB117",
+          "Junction City": "SAPB116",
+          "Lincoln": "SAPB112",
+          "Odessa": "SAPB111",
+          "Ogallala": "SAPB107",
+          "Omaha": "SAPB113",
+          "Percival": "SAPB108",
+          "Peru": "SAPB103",
+          "Salt Lake City": "SAPB105",
+          "Sidney": "SAPB106",
+          "York": "SAPB115"
+      };
+        const merchantID = merchantMapping[e["Location"]] || "Unknown";
+        const sheetSaving = Math.abs(Number(e["Your Savings"]));
+        const sheetRetail = Number(e["Posted Retail"]);
+        const hwyCostSaving = (7 / 10) * sheetSaving;
+        const difference = (sheetRetail - hwyCostSaving).toFixed(3);
+        const discount = (sheetRetail - difference).toFixed(3);
+        console.log("discount==>",discount);
+         return {
+           travelcenter: e["Location"],
+           merchant: merchantID,
+           price: sheetRetail.toFixed(3),
+           difference: difference,
+           state: e.State,
+           discount: discount,
+         };
+       }
+
+      const Sapp = () => {
+        let newSappData = [];
+        sappjsonData.forEach((data) => {
+          let calculatedData = SappCalculation(data);
+          newSappData.push(calculatedData);
+        });
+        downloadCSV(newSappData, "Sapp Bros");
+      }
 
   //download csv all files
   const downloadCSV = (processedData, fileName) => {
@@ -457,6 +476,6 @@ document.addEventListener("DOMContentLoaded", () => {
   taSubmitBtn.addEventListener("click", taPetro);
   caSubmitBtn.addEventListener("click", CaseyCost);
   flSubmitBtn.addEventListener("click", fleet);
-  // rcsubmitbtn.addEventListener("click", racetrac);
-  // sapsubmitbtn.addEventListener("click", Sapp);
+  rcSubmitBtn.addEventListener("click", racetrac);
+  sapBroProcess.addEventListener("click", Sapp);
 });
