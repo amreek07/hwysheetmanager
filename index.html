@@ -14,8 +14,8 @@
         <div class="selectBox">
           <label for="sheetSelector">Select Sheet type:</label>
           <select name="sheetSelector" id="sheetName">
-            <option value="" selected>Please select sheet type</option>
-            <option value="ambest">Ambest</option>
+            <!-- <option value="" selected>Please select sheet type</option> -->
+            <option value="ambest" selected>Ambest</option>
             <option value="ta-petro">Ta Petro</option>
             <option value="casey">Casey</option>
             <option value="7-Fleet">7 Fleet</option>
@@ -24,116 +24,154 @@
           </select>
         </div>
 
-        <div class="container ambestContainer" style="display: none">
+        <div class="container ambestContainer">
           <div class="inputSection">
             <label for="sheet">Ambest</label>
             <div class="chooseFileSection">
-              <div style="display: flex;">
+              <div style="display: flex">
                 <div id="chooseFileAmbest" class="chooseFile">Choose File</div>
-                <input type="text" placeholder="No Choosen File" class="inputFileAmbest inputFile" />
-                <input type="file" id="ambestSheet"  class="fileUpload" style="display: none" />
+                <input
+                  type="text"
+                  placeholder="No Choosen File"
+                  class="inputFileAmbest inputFile"
+                />
+                <input
+                  type="file"
+                  id="ambestSheet"
+                  class="fileUpload"
+                  style="display: none"
+                />
               </div>
               <button id="submitBtn" class="subbtn">Download Ambest</button>
             </div>
           </div>
+          <div class="showNumbersWiseData"></div>
         </div>
 
         <div class="container taContainer" style="display: none">
           <div class="inputSection">
             <label for="sheet">Ta Petro</label>
             <div class="chooseFileSection">
-              <div style="display: flex;">
+              <div style="display: flex">
                 <div id="chooseFilePetro" class="chooseFile">Choose File</div>
-                <input type="text" placeholder="No Choosen File" class="inputFilePetro inputFile" />
-                <input type="file" id="taSheet"  class="fileUpload" style="display: none" />
+                <input
+                  type="text"
+                  placeholder="No Choosen File"
+                  class="inputFilePetro inputFile"
+                />
+                <input
+                  type="file"
+                  id="taSheet"
+                  class="fileUpload"
+                  style="display: none"
+                />
               </div>
               <button id="taSubmitBtn" class="subbtn">Download TaPetro</button>
             </div>
           </div>
+          <div class="showNumbersWiseData"></div>
         </div>
 
         <div class="container caseyContainer" style="display: none">
           <div class="inputSection">
             <label for="casheet">Casey Cost Plus</label>
             <div class="chooseFileSection">
-              <div style="display: flex;">
+              <div style="display: flex">
                 <div id="chooseFileCasey" class="chooseFile">Choose File</div>
-                <input type="text" placeholder="No Choosen File" class="inputFileCasey inputFile"/>
-                <input type="file" name="casheet" id="casheet" style="display: none" />
+                <input
+                  type="text"
+                  placeholder="No Choosen File"
+                  class="inputFileCasey inputFile"
+                />
+                <input
+                  type="file"
+                  name="casheet"
+                  id="casheet"
+                  style="display: none"
+                />
               </div>
               <button id="caSubmitBtn" class="subbtn">Download Casey</button>
             </div>
           </div>
+
+          <div class="showNumbersWiseData"></div>
         </div>
 
         <div class="container fleetContainer" style="display: none">
-            <div class="inputSection">
-              <label for="flsheet">7 Fleet</label>
-              <div class="chooseFileSection">
-                <div style="display: flex;">
-                  <div id="chooseFileFleet" class="chooseFile">Choose File</div>
-                  <input type="text" placeholder="No Choosen File" class="inputFileFleet inputFile" />
-                  <input type="file" name="flsheet" id="flsheet" style="display: none" />
-                </div>
-                <button id="flSubmitBtn" class="subbtn">Download 7-Fleet</button>
+          <div class="inputSection">
+            <label for="flsheet">7 Fleet</label>
+            <div class="chooseFileSection">
+              <div style="display: flex">
+                <div id="chooseFileFleet" class="chooseFile">Choose File</div>
+                <input
+                  type="text"
+                  placeholder="No Choosen File"
+                  class="inputFileFleet inputFile"
+                />
+                <input
+                  type="file"
+                  name="flsheet"
+                  id="flsheet"
+                  style="display: none"
+                />
               </div>
+              <button id="flSubmitBtn" class="subbtn">Download 7-Fleet</button>
             </div>
           </div>
+          <div class="showNumbersWiseData"></div>
+        </div>
 
-
-          <div class="container raceContainer" style="display: none">
-            <div class="inputSection">
-              <label for="rcsheet">Ractrac</label>
-              <div class="chooseFileSection">
-                <div style="display: flex;">
-                  <div id="chooseFileRace" class="chooseFile">Choose File</div>
-                  <input type="text" placeholder="No Choosen File" class="inputFileRace inputFile" />
-                  <input type="file" name="rcsheet" id="rcsheet" style="display: none"/>
-                </div>
-                <button id="rcSubmitBtn" class="subbtn">Download Racetrac</button>
+        <div class="container raceContainer" style="display: none">
+          <div class="inputSection">
+            <label for="rcsheet">Ractrac</label>
+            <div class="chooseFileSection">
+              <div style="display: flex">
+                <div id="chooseFileRace" class="chooseFile">Choose File</div>
+                <input
+                  type="text"
+                  placeholder="No Choosen File"
+                  class="inputFileRace inputFile"
+                />
+                <input
+                  type="file"
+                  name="rcsheet"
+                  id="rcsheet"
+                  style="display: none"
+                />
               </div>
+              <button id="rcSubmitBtn" class="subbtn">Download Racetrac</button>
             </div>
           </div>
+          <div class="showNumbersWiseData"></div>
+        </div>
 
         <div class="container sapBroContainer" style="display: none">
           <div class="inputSection">
             <label for="sapbros">Sap Bros Data</label>
-            <div class="chooseFileSection" style="height:40px;">
-              <div style="display: flex;">
-                <label for="" class="chooseFile" style="font-size: 14px;">Enter Text</label>
-                <textarea name="sapbros" id="sapText"></textarea>
+            <div class="chooseFileSection" style="height: 40px">
+              <div style="display: flex">
+                <!-- <label for="" class="chooseFile" style="font-size: 14px;">Enter Text</label> -->
+                <textarea
+                  name="sapbros"
+                  id="sapText"
+                  placeholder="Paste your sap bros data here..."
+                  cols="35"
+                  rows="25"
+                  style="text-indent: 10px; outline: none"
+                ></textarea>
               </div>
-              <button id="sapBroProcess" class="subbtn">Download Sap Bros data</button>
+              <button id="sapBroProcess" class="subbtn">
+                Download Sap Bros data
+              </button>
             </div>
           </div>
+          <div class="showNumbersWiseData"></div>
         </div>
-
-
-        
       </div>
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="script.js"></script>
-    <!-- <script>
-      const inputFile = document.querySelectorAll(".inputFile");
-      const fileUpload = document.querySelectorAll(".fileUpload");
-      const chooseFile = document.querySelectorAll("#chooseFile");
-
-      inputFile.addEventListener("click", () => {
-        
-        fileUpload.click();
-      });
-      chooseFile.addEventListener("click", () => {
-       
-        fileUpload.click();
-      });
-
-      fileUpload.addEventListener("change", () => {
-        if (fileUpload.files.length > 0) {
-          inputFile.value = fileUpload.files[0].name; // Displays selected file name in the text input
-        }
-      });
-    </script>  -->
+   
   </body>
 </html>

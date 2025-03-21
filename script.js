@@ -12,16 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // selectBox.addEventListener("change", () => {
-    selectBox.addEventListener("change", () => {
-      console.log(selectBox.value);
-    
-      // Hide all containers
-      Object.values(containers).forEach(container => container.style.display = "none");
-    
-      // Show selected container if it exists
-      if (containers[selectBox.value]) {
-        containers[selectBox.value].style.display = "block";
-      }
+  selectBox.addEventListener("change", () => {
+    // console.log(selectBox.value);
+
+    // Hide all containers
+    Object.values(containers).forEach(
+      (container) => (container.style.display = "none")
+    );
+
+    // Show selected container if it exists
+    if (containers[selectBox.value]) {
+      containers[selectBox.value].style.display = "block";
+    }
   });
 
   //ambest js code
@@ -80,6 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const CalculatedData = ambestCalculation(data);
       newAmbestSheet.push(CalculatedData);
     });
+
+    const allDiscount = newAmbestSheet.map((obj) => obj.discount);
+    allDiscountCalculator(allDiscount, "ambestContainer");
     downloadCSV(newAmbestSheet, "Ambest");
   };
 
@@ -117,7 +122,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const taPetroCalculation = (e) => {
-   
     let retail_price = Number(e.Price);
     let fuel_price = Number(e.Price_1);
     let saving_price = retail_price - fuel_price;
@@ -140,7 +144,12 @@ document.addEventListener("DOMContentLoaded", () => {
       let calculatedData = taPetroCalculation(data);
       newTaPetroData.push(calculatedData);
     });
-    downloadCSV(newTaPetroData, "Ta Petro");
+
+    const allDiscount = newTaPetroData.map((obj) => obj.discount);
+
+    allDiscountCalculator(allDiscount, "taContainer");
+
+    downloadCSV(newTaPetroData, "TA Petro");
   };
 
   //casey cost plus sheet functionality
@@ -189,6 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const hwyCostSaving = (7 / 10) * sheetSaving;
     const difference = (sheetRetail - hwyCostSaving).toFixed(3);
     const discount = (sheetRetail - difference).toFixed(3);
+
     return {
       travelcenter: e["Caseys Site #"],
       merchant: e["Rack ID"],
@@ -204,221 +214,236 @@ document.addEventListener("DOMContentLoaded", () => {
       let calculatedData = caseyCalculation(data);
       newcaseyData.push(calculatedData);
     });
-    downloadCSV(newcaseyData, "Caseys Cost");
+
+    const allDiscount = newcaseyData.map((obj) => obj.discount);
+    // console.log(allDiscount);
+
+    allDiscountCalculator(allDiscount, "caseyContainer");
+
+    downloadCSV(newcaseyData, "Casey Price");
   };
 
-    // 7 Fleet sheet function
-    const FleetFile = document.querySelector('#flsheet');
-    const flSubmitBtn = document.querySelector('#flSubmitBtn');
-    const chooseFileFleet = document.querySelector('#chooseFileFleet');
-    const inputFileFleet = document.querySelector('.inputFileFleet');
-    let FlJsonData;
+  // 7 Fleet sheet function
+  const FleetFile = document.querySelector("#flsheet");
+  const flSubmitBtn = document.querySelector("#flSubmitBtn");
+  const chooseFileFleet = document.querySelector("#chooseFileFleet");
+  const inputFileFleet = document.querySelector(".inputFileFleet");
+  let FlJsonData;
 
+  chooseFileFleet.addEventListener("click", () => {
+    FleetFile.click();
+  });
+  inputFileFleet.addEventListener("click", () => {
+    FleetFile.click();
+  });
 
-    chooseFileFleet.addEventListener("click", () => {
-      FleetFile.click();
-    });
-    inputFileFleet.addEventListener("click", () => {
-      FleetFile.click();
-    });
-  
-    FleetFile.addEventListener("change", () => {
-      if (FleetFile.files.length > 0) {
-        inputFileFleet.value = FleetFile.files[0].name;
-      }
-    });
-
-
-
-    FleetFile.addEventListener("change", (event) => {
-      const uploadedFile = event.target.files[0];
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: "array" });
-        const sheetName = workbook.SheetNames[0]; // Get first sheet
-        const sheet = workbook.Sheets[sheetName];
-        FlJsonData = XLSX.utils.sheet_to_json(sheet, {range: 0}); // Convert sheet to JSON
-      };
-      reader.readAsArrayBuffer(uploadedFile); // Read the file
-    });
-
-    const fleetCalculation = (e) =>{
-      
-        const sheetSaving = Number(e["Savings/Gal"]);
-        const sheetRetail = Number(e["Retail Price"]);
-        const hwyCostSaving = (7 / 10) * sheetSaving;
-        const difference = (sheetRetail - hwyCostSaving).toFixed(3);
-        const discount = (sheetRetail - difference).toFixed(3);
-      return {
-        travelcenter: e["Store#"],
-        merchant: e["Comdata"],
-        price: sheetRetail.toFixed(3),
-        difference: difference,
-        state: e.State,
-        discount: discount,
-      };
+  FleetFile.addEventListener("change", () => {
+    if (FleetFile.files.length > 0) {
+      inputFileFleet.value = FleetFile.files[0].name;
     }
-    const fleet = () => {
-      let newfleetData = [];
-      FlJsonData.forEach((data) => {
-        let calculatedData = fleetCalculation(data);
-        newfleetData.push(calculatedData);
-      });
-      downloadCSV(newfleetData, "7 Fleet");
+  });
+
+  FleetFile.addEventListener("change", (event) => {
+    const uploadedFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheetName = workbook.SheetNames[0]; // Get first sheet
+      const sheet = workbook.Sheets[sheetName];
+      FlJsonData = XLSX.utils.sheet_to_json(sheet, { range: 0 }); // Convert sheet to JSON
+    };
+    reader.readAsArrayBuffer(uploadedFile); // Read the file
+  });
+
+  const fleetCalculation = (e) => {
+    const sheetSaving = Number(e["Savings/Gal"]);
+    const sheetRetail = Number(e["Retail Price"]);
+    const hwyCostSaving = (7 / 10) * sheetSaving;
+    const difference = (sheetRetail - hwyCostSaving).toFixed(3);
+    const discount = (sheetRetail - difference).toFixed(3);
+    return {
+      travelcenter: e["Store#"],
+      merchant: e["Comdata"],
+      price: sheetRetail.toFixed(3),
+      difference: difference,
+      state: e.State,
+      discount: discount,
+    };
+  };
+  const fleet = () => {
+    let newfleetData = [];
+    FlJsonData.forEach((data) => {
+      let calculatedData = fleetCalculation(data);
+      newfleetData.push(calculatedData);
+    });
+
+    const allDiscount = newfleetData.map((obj) => obj.discount);
+    allDiscountCalculator(allDiscount, "fleetContainer");
+    downloadCSV(newfleetData, "7 Fleet");
+  };
+
+  //Ractrac sheet function
+  const RaceFile = document.querySelector("#rcsheet");
+  const chooseFileRace = document.querySelector("#chooseFileRace");
+  const rcSubmitBtn = document.querySelector("#rcSubmitBtn");
+  const inputFileRace = document.querySelector(".inputFileRace");
+  let RcJsonData;
+
+  chooseFileRace.addEventListener("click", () => {
+    RaceFile.click();
+  });
+  inputFileFleet.addEventListener("click", () => {
+    RaceFile.click();
+  });
+
+  RaceFile.addEventListener("change", () => {
+    if (RaceFile.files.length > 0) {
+      inputFileRace.value = RaceFile.files[0].name;
     }
+  });
 
-    //Ractrac sheet function
-     const RaceFile = document.querySelector('#rcsheet');
-     const chooseFileRace = document.querySelector('#chooseFileRace');
-     const rcSubmitBtn = document.querySelector('#rcSubmitBtn');
-     const inputFileRace = document.querySelector('.inputFileRace');
-     let RcJsonData;
+  RaceFile.addEventListener("change", (event) => {
+    const uploadedFile = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheetName = workbook.SheetNames[0]; // Get first sheet
+      const sheet = workbook.Sheets[sheetName];
+      RcJsonData = XLSX.utils.sheet_to_json(sheet, { range: 4 }); // Convert sheet to JSON
+    };
+    reader.readAsArrayBuffer(uploadedFile); // Read the file
+  });
 
+  const RaceCalculation = (e) => {
+    // console.log(e);
+    let retail_price = Number(e["Retail Price"]);
+    let fuel_price = Number(e["Final Price"]);
+    let saving_price = retail_price - fuel_price;
+    let hwyCostSaving = (7 / 10) * saving_price;
+    let difference = (retail_price - hwyCostSaving).toFixed(3);
+    let discount = (retail_price - difference).toFixed(3);
+    return {
+      travelcenter: e["City"],
+      merchant: e["Store ID"],
+      price: retail_price.toFixed(3),
+      difference: difference,
+      state: e.State,
+      discount: discount,
+    };
+  };
 
-     chooseFileRace.addEventListener("click", () => {
-      RaceFile.click();
+  const racetrac = () => {
+    let newraceData = [];
+    RcJsonData.forEach((data) => {
+      let calculatedData = RaceCalculation(data);
+      newraceData.push(calculatedData);
     });
-    inputFileFleet.addEventListener("click", () => {
-      RaceFile.click();
-    });
-  
-    RaceFile.addEventListener("change", () => {
-      if (RaceFile.files.length > 0) {
-        inputFileRace.value = RaceFile.files[0].name;
+
+    const allDiscount = newraceData.map((obj) => obj.discount);
+    allDiscountCalculator(allDiscount, "raceContainer");
+
+    downloadCSV(newraceData, "Racrtac");
+  };
+
+  //sap bros data function
+  const sapBrosData = document.querySelector("#sapText");
+  const sapBroProcess = document.querySelector("#sapBroProcess");
+  let sappjsonData = [];
+
+  sapBrosData.addEventListener("input", () => {
+    processSapBrosData();
+  });
+
+  const processSapBrosData = () => {
+    const sapBroInputText = sapBrosData.value.trim();
+    if (!sapBroInputText) {
+      return;
+    }
+    let lines = sapBroInputText
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line);
+    const headers = [
+      "Location",
+      "State",
+      "Cost Plus Price",
+      "Retail Minus Price",
+      "Your Price",
+      "Posted Retail",
+      "Your Savings",
+    ];
+    sappjsonData = [];
+    let dataStartIndex = 0;
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i] === "Your Savings") {
+        dataStartIndex = i + 1;
+        break;
       }
-    });
+    }
+    for (let i = dataStartIndex; i < lines.length; i += headers.length) {
+      let row = lines.slice(i, i + headers.length);
 
-     RaceFile.addEventListener("change", (event) => {
-       const uploadedFile = event.target.files[0];
-       const reader = new FileReader();
-       reader.onload = function (e) {
-         const data = new Uint8Array(e.target.result);
-         const workbook = XLSX.read(data, { type: "array" });
-         const sheetName = workbook.SheetNames[0]; // Get first sheet
-         const sheet = workbook.Sheets[sheetName];
-         RcJsonData = XLSX.utils.sheet_to_json(sheet, {range: 4}); // Convert sheet to JSON
-       };
-       reader.readAsArrayBuffer(uploadedFile); // Read the file
-     });
-
-     const RaceCalculation = (e) =>{
-      console.log(e);
-      let retail_price = Number(e["Retail Price"]);
-      let fuel_price = Number(e["Final Price"]);
-      let saving_price = (retail_price - fuel_price );
-      let hwyCostSaving = (7 / 10) * saving_price;
-      let difference = (retail_price - hwyCostSaving).toFixed(3);
-      let discount = (retail_price - difference).toFixed(3);
-       return {
-         travelcenter: e["City"],
-         merchant: e["Store ID"],
-         price: retail_price.toFixed(3),
-         difference: difference,
-         state: e.State,
-         discount: discount,
-       };
-     }
-
-     const racetrac = () => {
-       let newraceData = [];
-       RcJsonData.forEach((data) => {
-         let calculatedData = RaceCalculation(data);
-         newraceData.push(calculatedData);
-       });
-       downloadCSV(newraceData, "Racrtac");
-     }
-
-    //sap bros data function
-      const sapBrosData = document.querySelector('#sapText');
-      const sapBroProcess = document.querySelector('#sapBroProcess');
-      let sappjsonData = [];
-
-      sapBrosData.addEventListener('input', () => {
-          processSapBrosData();
-      });
-
-      const processSapBrosData = () => {
-          const sapBroInputText = sapBrosData.value.trim();
-          if (!sapBroInputText) {
-              return;
-          }
-          let lines = sapBroInputText.split("\n").map(line => line.trim()).filter(line => line);
-          const headers = [
-              "Location",
-              "State",
-              "Cost Plus Price",
-              "Retail Minus Price",
-              "Your Price",
-              "Posted Retail",
-              "Your Savings"
-          ];
-          sappjsonData = [];
-          let dataStartIndex = 0;
-          for (let i = 0; i < lines.length; i++) {
-              if (lines[i] === "Your Savings") {
-                  dataStartIndex = i + 1;
-                  break;
-              }
-          }
-          for (let i = dataStartIndex; i < lines.length; i += headers.length) {
-              let row = lines.slice(i, i + headers.length);
-
-              if (row.length === headers.length) {
-                  let jsonRow = {};
-                  headers.forEach((header, index) => {
-                      jsonRow[header] = row[index] || "";
-                  });
-                  sappjsonData.push(jsonRow);
-              }
-          }
-      };
-
-      const SappCalculation = (e) =>{
-        const merchantMapping = {
-          "Clearfield": "SAPB101",
-          "Cheyenne": "SAPB104",
-          "Columbus": "SAPB114",
-          "Council Bluffs": "SAPB110",
-          "Denver": "SAPB102",
-          "Fremont": "SAPB109",
-          "Harrisonville": "SAPB117",
-          "Junction City": "SAPB116",
-          "Lincoln": "SAPB112",
-          "Odessa": "SAPB111",
-          "Ogallala": "SAPB107",
-          "Omaha": "SAPB113",
-          "Percival": "SAPB108",
-          "Peru": "SAPB103",
-          "Salt Lake City": "SAPB105",
-          "Sidney": "SAPB106",
-          "York": "SAPB115"
-      };
-        const merchantID = merchantMapping[e["Location"]] || "Unknown";
-        const sheetSaving = Math.abs(Number(e["Your Savings"]));
-        const sheetRetail = Number(e["Posted Retail"]);
-        const hwyCostSaving = (7 / 10) * sheetSaving;
-        const difference = (sheetRetail - hwyCostSaving).toFixed(3);
-        const discount = (sheetRetail - difference).toFixed(3);
-        console.log("discount==>",discount);
-         return {
-           travelcenter: e["Location"],
-           merchant: merchantID,
-           price: sheetRetail.toFixed(3),
-           difference: difference,
-           state: e.State,
-           discount: discount,
-         };
-       }
-
-      const Sapp = () => {
-        let newSappData = [];
-        sappjsonData.forEach((data) => {
-          let calculatedData = SappCalculation(data);
-          newSappData.push(calculatedData);
+      if (row.length === headers.length) {
+        let jsonRow = {};
+        headers.forEach((header, index) => {
+          jsonRow[header] = row[index] || "";
         });
-        downloadCSV(newSappData, "Sapp Bros");
+        sappjsonData.push(jsonRow);
       }
+    }
+  };
+
+  const SappCalculation = (e) => {
+    const merchantMapping = {
+      Clearfield: "SAPB101",
+      Cheyenne: "SAPB104",
+      Columbus: "SAPB114",
+      "Council Bluffs": "SAPB110",
+      Denver: "SAPB102",
+      Fremont: "SAPB109",
+      Harrisonville: "SAPB117",
+      "Junction City": "SAPB116",
+      Lincoln: "SAPB112",
+      Odessa: "SAPB111",
+      Ogallala: "SAPB107",
+      Omaha: "SAPB113",
+      Percival: "SAPB108",
+      Peru: "SAPB103",
+      "Salt Lake City": "SAPB105",
+      Sidney: "SAPB106",
+      York: "SAPB115",
+    };
+    const merchantID = merchantMapping[e["Location"]] || "Unknown";
+    const sheetSaving = Math.abs(Number(e["Your Savings"]));
+    const sheetRetail = Number(e["Posted Retail"]);
+    const hwyCostSaving = (7 / 10) * sheetSaving;
+    const difference = (sheetRetail - hwyCostSaving).toFixed(3);
+    const discount = (sheetRetail - difference).toFixed(3);
+    // console.log("discount==>", discount);
+    return {
+      travelcenter: e["Location"],
+      merchant: merchantID,
+      price: sheetRetail.toFixed(3),
+      difference: difference,
+      state: e.State,
+      discount: discount,
+    };
+  };
+
+  const Sapp = () => {
+    let newSappData = [];
+    sappjsonData.forEach((data) => {
+      let calculatedData = SappCalculation(data);
+      newSappData.push(calculatedData);
+    });
+
+    const allDiscount = newSappData.map((obj) => obj.discount);
+    allDiscountCalculator(allDiscount, "sapBroContainer");
+
+    downloadCSV(newSappData, "Sapp Bros");
+  };
 
   //download csv all files
   const downloadCSV = (processedData, fileName) => {
@@ -438,6 +463,57 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
+
+  //calculation of numberwise locations per sheet
+
+  let locations30to50 = 0;
+  let locations50to60 = 0;
+  let locations60to70 = 0;
+  let locations70to80 = 0;
+  let locations80to90 = 0;
+  let locationsAbove90 = 0;
+
+  const allDiscountCalculator = (allDiscount, container) => {
+
+
+
+    // const countUnder30 = allDiscount.filter((d) => d >= 0.3).length;
+    const count30to50 = allDiscount.filter((d) => d > 0.3 && d <= 0.5).length;
+    const count50to60 = allDiscount.filter((d) => d > 0.5 && d <= 0.6).length;
+    const count60to70 = allDiscount.filter((d) => d > 0.6 && d <= 0.7).length;
+    const count70to80 = allDiscount.filter((d) => d > 0.7 && d <= 0.8).length;
+    const count80to90 = allDiscount.filter((d) => d > 0.8 && d <= 0.9).length;
+    const countAbove90 = allDiscount.filter((d) => d > 0.9).length;
+
+    const displayDiv = document.querySelector(`.${container} .showNumbersWiseData`);
+
+    // console.log('selected div', displayDiv);
+
+    displayDiv.innerHTML = "";
+    // <-- <p><strong>Data under 0.30:</strong> ${countUnder30}</p>-->
+
+    locations30to50 += count30to50;
+    locations50to60 += count50to60;
+    locations60to70 += count60to70;
+    locations70to80 += count70to80;
+    locations80to90 += count80to90;
+    locationsAbove90 += countAbove90;
+
+
+    const dataHTML = `
+      <p><strong>Data between 0.30 and 0.50:</strong> ${locations30to50}</p>
+      <p><strong>Data between 0.50 and 0.60:</strong> ${locations50to60}</p>
+      <p><strong>Data between 0.60 and 0.70:</strong> ${locations60to70}</p>
+      <p><strong>Data between 0.70 and 0.80:</strong> ${locations70to80}</p>
+      <p><strong>Data between 0.80 and 0.90:</strong> ${locations80to90}</p>
+      <p><strong>Data above 0.90:</strong> ${locationsAbove90}</p>
+  `;
+    // Insert the HTML into the div
+    displayDiv.innerHTML = dataHTML;
+  };
+
+// }, 5000);
+  
   //all btn click functionality
 
   submitBtn.addEventListener("click", ambest);

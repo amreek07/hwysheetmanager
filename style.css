@@ -16,7 +16,7 @@ main{
     margin: 12% auto;
     padding: 40px;
     background-color: #fff;
-    height: 45vh;
+    /* height: 45vh; */
     
 }
 main .heading{
@@ -49,7 +49,7 @@ select ,select option{
 }
 .container{
     /* border: 1px solid grey; */
-    display: flex;
+    /* display: flex; */
     padding: 10px;
 }
 
@@ -71,6 +71,9 @@ select ,select option{
     height: 20px !important;
     cursor: pointer !important;
     border: none;
+}
+input{
+    outline: none;
 }
 .inputFile {
     height: 36px;
@@ -94,4 +97,8 @@ select ,select option{
 textarea {
     resize: none;
     border-radius: 0px !important;
+  }
+
+  .showNumbersWiseData{
+    margin-top: 20px;
   }
